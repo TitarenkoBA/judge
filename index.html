@@ -1,0 +1,394 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Судебный поиск — все суды России в одной строке</title>
+  <meta name="description" content="Настольное приложение для поиска дел сразу по сайтам судов общей юрисдикции, арбитражных судов, судов Москвы, Верховного суда и по реестру адвокатов. Работает на вашем компьютере, без серверов.">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <style>
+    :root {
+      --navy: #13294b;
+      --navy-2: #0f2140;
+      --ink: #0f172a;
+      --muted: #5b6475;
+      --line: #e3e7ee;
+      --bg: #f4f6f9;
+      --gold: #e3b65b;
+      --gold-2: #ecc77a;
+      --card: #ffffff;
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+    /* Шапка */
+    .top { background: var(--navy); color: #fff; }
+    .nav { display: flex; align-items: center; gap: 24px; height: 64px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; text-decoration: none; }
+    .brand svg { color: var(--gold); }
+    .nav-links { margin-left: auto; display: flex; gap: 22px; font-size: 14px; }
+    .nav-links a { text-decoration: none; color: #cbd5e1; }
+    .nav-links a:hover { color: #fff; }
+
+    /* Первый экран */
+    .hero { background: linear-gradient(180deg, var(--navy) 0%, var(--navy-2) 100%); color: #fff; padding: 56px 0 0; overflow: hidden; }
+    .hero h1 { font-size: clamp(32px, 5vw, 52px); line-height: 1.1; margin: 0 0 18px; letter-spacing: -0.02em; max-width: 780px; }
+    .hero h1 em { font-style: normal; color: var(--gold); }
+    .hero p.lead { font-size: 18px; color: #cbd5e1; max-width: 680px; margin: 0 0 30px; }
+    .cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 14px 22px; border-radius: 10px; font-weight: 600; font-size: 16px;
+      text-decoration: none; border: 0; cursor: pointer;
+    }
+    .btn-gold { background: var(--gold); color: var(--navy); }
+    .btn-gold:hover { background: var(--gold-2); }
+    .btn-ghost { color: #fff; border: 1px solid rgba(255,255,255,.25); }
+    .btn-ghost:hover { background: rgba(255,255,255,.08); }
+    .dl-meta { font-size: 13px; color: #94a3b8; }
+
+    /* Иллюстрация интерфейса */
+    .mock {
+      margin: 48px auto -2px; max-width: 1000px; border-radius: 14px 14px 0 0; overflow: hidden;
+      background: #fff; color: var(--ink); box-shadow: 0 -10px 60px rgba(0,0,0,.35);
+      font-size: 13px;
+    }
+    .mock-bar { background: var(--navy); display: flex; align-items: center; gap: 10px; padding: 10px 14px; }
+    .mock-search { flex: 1; background: #fff; border-radius: 8px; padding: 8px 12px; color: var(--ink); display: flex; justify-content: space-between; }
+    .mock-search span:last-child { font-size: 11px; background: #f1f5f9; color: var(--muted); padding: 1px 8px; border-radius: 99px; }
+    .mock-btn { background: var(--gold); color: var(--navy); font-weight: 600; padding: 8px 16px; border-radius: 8px; }
+    .mock-body { display: grid; grid-template-columns: 220px 1fr; gap: 12px; padding: 12px; background: var(--bg); }
+    .mock-side, .mock-main { background: #fff; border: 1px solid var(--line); border-radius: 10px; }
+    .mock-side { padding: 10px; }
+    .mock-side h4, .mock-main h4 { margin: 0 0 8px; font-size: 12px; }
+    .src { display: flex; align-items: center; gap: 8px; padding: 5px 0; }
+    .dot { width: 8px; height: 8px; border-radius: 50%; background: #10b981; }
+    .dot.busy { background: #0ea5e9; }
+    .dot.wait { background: #f59e0b; }
+    .src b { margin-left: auto; font-weight: 500; color: var(--muted); }
+    .captcha { margin-top: 10px; border: 1px solid #fcd34d; background: #fffbeb; border-radius: 8px; padding: 8px; font-size: 11px; color: #92400e; }
+    .captcha .code { display: inline-block; margin-top: 6px; font-family: "Courier New", monospace; letter-spacing: 3px; background: #fff; border: 1px solid #e5e7eb; padding: 2px 8px; color: #334155; text-decoration: line-through; text-decoration-color: #94a3b8; }
+    .mock-main { padding: 10px 0 0; overflow: hidden; }
+    .mock-main h4 { padding: 0 12px; }
+    table.rows { width: 100%; border-collapse: collapse; }
+    table.rows th { text-align: left; font-size: 10px; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); background: #f8fafc; padding: 6px 10px; border-bottom: 1px solid var(--line); }
+    table.rows td { padding: 7px 10px; border-bottom: 1px solid #f1f5f9; vertical-align: top; }
+    .tag { font-size: 10px; padding: 1px 8px; border-radius: 99px; white-space: nowrap; }
+    .t-s { background: #e0f2fe; color: #075985; }
+    .t-k { background: #fef3c7; color: #92400e; }
+    .t-m { background: #ffe4e6; color: #9f1239; }
+    .t-v { background: #ede9fe; color: #5b21b6; }
+    .num { color: #1d3a6e; font-weight: 600; }
+
+    /* Секции */
+    section.block { padding: 80px 0; }
+    .kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; color: #b0852f; margin: 0 0 10px; }
+    h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.01em; }
+    .sub { color: var(--muted); font-size: 17px; max-width: 720px; margin: 0 0 40px; }
+    .grid { display: grid; gap: 18px; }
+    .g3 { grid-template-columns: repeat(3, 1fr); }
+    .g5 { grid-template-columns: repeat(5, 1fr); }
+    .g4 { grid-template-columns: repeat(4, 1fr); }
+    .t-ks { background: #f1f5f9; color: #334155; }
+    .t-ms { background: #e0f2fe; color: #0c4a6e; }
+    .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; max-width: 900px; }
+    .plan { background: #fff; border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px; }
+    .plan.pro { border-color: var(--gold); box-shadow: 0 6px 24px rgba(19,41,75,.08); }
+    .plan h3 { margin: 0 0 4px; font-size: 20px; }
+    .plan .price { color: #64748b; font-size: 14px; margin: 0 0 14px; }
+    .plan ul { margin: 0; padding: 0; list-style: none; }
+    .plan li { padding: 5px 0 5px 24px; position: relative; font-size: 15px; }
+    .plan li::before { content: "\2713"; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
+    .plan .note { color: #64748b; font-size: 13px; margin-top: 14px; }
+    .legal-links a { color: inherit; text-decoration: underline; margin-right: 14px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
+    .card h3 { margin: 0 0 8px; font-size: 17px; }
+    .card p { margin: 0; color: var(--muted); font-size: 15px; }
+    .icon { width: 40px; height: 40px; border-radius: 10px; background: #eef2f8; color: var(--navy); display: grid; place-items: center; margin-bottom: 14px; }
+    .source { text-align: left; }
+    .source .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; margin-bottom: 12px; }
+    .white { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+
+    .steps { counter-reset: step; }
+    .step { position: relative; padding-left: 58px; }
+    .step::before {
+      counter-increment: step; content: counter(step);
+      position: absolute; left: 0; top: 0; width: 40px; height: 40px; border-radius: 50%;
+      background: var(--navy); color: var(--gold); font-weight: 700; display: grid; place-items: center;
+    }
+    .step h3 { margin: 6px 0 6px; font-size: 18px; }
+    .step p { margin: 0; color: var(--muted); }
+
+    .privacy { background: var(--navy); color: #fff; border-radius: 20px; padding: 44px; display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
+    .privacy h2 { color: #fff; }
+    .privacy p { color: #cbd5e1; }
+    .privacy ul { margin: 0; padding: 0; list-style: none; }
+    .privacy li { padding: 10px 0 10px 30px; border-bottom: 1px solid rgba(255,255,255,.1); position: relative; color: #e2e8f0; }
+    .privacy li::before { content: "✓"; position: absolute; left: 0; color: var(--gold); font-weight: 700; }
+
+    details { background: #fff; border: 1px solid var(--line); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+    summary { cursor: pointer; font-weight: 600; font-size: 16px; list-style: none; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; float: right; color: var(--muted); font-weight: 400; font-size: 20px; line-height: 1; }
+    details[open] summary::after { content: "−"; }
+    details p { color: var(--muted); margin: 12px 0 0; }
+
+    .download { text-align: center; }
+    .dl-options { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; max-width: 900px; margin: 0 auto; }
+    .dl-option {
+      display: flex; flex-direction: column; gap: 2px; min-width: 220px; padding: 14px 20px;
+      background: #fff; border: 1px solid var(--line); border-radius: 12px; text-decoration: none; text-align: left;
+    }
+    .dl-option:hover { border-color: var(--gold); box-shadow: 0 4px 14px rgba(19,41,75,.08); }
+    .dl-option.is-mine { border-color: var(--gold); background: #fffaf0; }
+    .dl-option b { color: var(--navy); font-size: 16px; }
+    .dl-option span { color: var(--muted); font-size: 13px; }
+    .req { margin-top: 18px; color: var(--muted); font-size: 14px; }
+
+    footer { border-top: 1px solid var(--line); padding: 32px 0; color: var(--muted); font-size: 13px; background: #fff; }
+    footer p { margin: 0 0 8px; }
+
+    @media (max-width: 900px) {
+      .g3 { grid-template-columns: 1fr; }
+      .g5, .g4 { grid-template-columns: 1fr 1fr; }
+      .plans { grid-template-columns: 1fr; }
+      .privacy { grid-template-columns: 1fr; padding: 28px; }
+      .mock-body { grid-template-columns: 1fr; }
+      .mock-side { display: none; }
+      .nav-links { display: none; }
+      .hide-sm { display: none; }
+    }
+    @media (max-width: 520px) {
+      .g5, .g4 { grid-template-columns: 1fr; }
+      section.block { padding: 56px 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="top">
+    <div class="wrap nav">
+      <a class="brand" href="#">
+        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0L7 7Zm10 0-3 7a3 3 0 0 0 6 0l-3-7ZM8 21h8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Судебный поиск
+      </a>
+      <nav class="nav-links">
+        <a href="#sources">Источники</a>
+        <a href="#features">Возможности</a>
+        <a href="#pro">Pro</a>
+        <a href="#privacy">Приватность</a>
+        <a href="#faq">Вопросы</a>
+        <a href="#download">Скачать</a>
+      </nav>
+    </div>
+  </div>
+
+  <header class="hero">
+    <div class="wrap">
+      <h1>Все суды России — <em>в одной строке поиска</em></h1>
+      <p class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов общей юрисдикции, арбитражных судов, судов Москвы, Верховного и Конституционного судов, реестр адвокатов и соберёт результаты на одном экране.</p>
+      <div class="cta">
+        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.12/judge-search-setup-0.1.12.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
+        <a class="btn btn-ghost" href="#download">Другие системы</a>
+        <span class="dl-meta">Версия 0.1.12 · Windows, Android</span>
+      </div>
+
+      <div class="mock" aria-label="Пример интерфейса (данные вымышлены)">
+        <div class="mock-bar">
+          <div class="mock-search"><span>Иванов Иван Иванович</span><span>Участник дела</span></div>
+          <div class="mock-btn">Найти</div>
+        </div>
+        <div class="mock-body">
+          <div class="mock-side">
+            <h4>Источники</h4>
+            <div class="src"><span class="dot"></span>ГАС «Правосудие»<b>14</b></div>
+            <div class="src"><span class="dot"></span>КАД<b>3</b></div>
+            <div class="src"><span class="dot busy"></span>Мосгорсуд<b>…</b></div>
+            <div class="src"><span class="dot"></span>ВС РФ<b>1</b></div>
+            <div class="src"><span class="dot wait"></span>Адвокаты<b>2</b></div>
+            <div class="captcha">Введите код с картинки<br><span class="code">4 7 1 9 2</span></div>
+          </div>
+          <div class="mock-main">
+            <h4>Дела · 18</h4>
+            <table class="rows">
+              <thead><tr><th>Источник</th><th>Номер дела</th><th class="hide-sm">Суд</th><th>Стороны</th></tr></thead>
+              <tbody>
+                <tr><td><span class="tag t-s">ГАС «Правосудие»</span></td><td class="num">2-1361/2026</td><td class="hide-sm">Районный суд</td><td>истец: Иванов И. И.; ответчик: АО «Пример»</td></tr>
+                <tr><td><span class="tag t-k">КАД</span></td><td class="num">А40-12345/2026</td><td class="hide-sm">АС города Москвы</td><td>ООО «Альфа» — ИП Иванов И. И.</td></tr>
+                <tr><td><span class="tag t-m">Мосгорсуд</span></td><td class="num">02-0417/2026</td><td class="hide-sm">Районный суд г. Москвы</td><td>Иванов И. И. — ООО «Бета»</td></tr>
+                <tr><td><span class="tag t-v">ВС РФ</span></td><td class="num">5-КГ26-14</td><td class="hide-sm">Верховный суд РФ</td><td>Иванов И. И. — АО «Гамма»</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="block" id="sources">
+    <div class="wrap">
+      <p class="kicker">Источники</p>
+      <h2>Шесть источников вместо десятков вкладок</h2>
+      <p class="sub">Поиск идёт по официальным сайтам и только по общедоступным сведениям, которые суды публикуют по закону об открытости правосудия (262-ФЗ).</p>
+      <div class="grid g3">
+        <div class="card source"><span class="badge t-s">ГАС «Правосудие»</span><h3>Суды общей юрисдикции</h3><p>Районные, областные, апелляционные, кассационные и военные суды — более 2 300 сайтов. Мировые судьи: выбранные вами участки (до трёх за поиск, на входе каждого — код с картинки).</p></div>
+        <div class="card source"><span class="badge t-m">Мосгорсуд</span><h3>Суды Москвы</h3><p>Московский городской суд и районные суды Москвы.</p></div>
+        <div class="card source"><span class="badge t-k">КАД</span><h3>Арбитражные суды</h3><p>Все арбитражные суды: участники, судьи, документы. Поиск — через ваш установленный Edge или Chrome, по вашему выбору.</p></div>
+        <div class="card source"><span class="badge t-v">ВС РФ</span><h3>Верховный суд</h3><p>Дела и жалобы во всех инстанциях, движение дела и итоговые акты.</p></div>
+        <div class="card source"><span class="badge t-ks">КС РФ</span><h3>Конституционный суд</h3><p>Решения Конституционного суда Российской Федерации.</p></div>
+        <div class="card source"><span class="badge" style="background:#d1fae5;color:#065f46">Минюст</span><h3>Реестр адвокатов</h3><p>Статус, регистрационный номер, адвокатская палата, прежние ФИО.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block white" id="features">
+    <div class="wrap">
+      <p class="kicker">Возможности</p>
+      <h2>Всё, что нужно для проверки контрагента или подготовки к делу</h2>
+      <p class="sub">Приложение не заменяет сайты судов. Оно избавляет от ручного обхода каждого сайта и сводит ответы в одну таблицу.</p>
+      <div class="grid g3">
+        <div class="card"><div class="icon">⌕</div><h3>Одна строка — любой запрос</h3><p>Само определяет, что вы ввели: ФИО или наименование, ИНН, номер дела или УИД. По УИД сразу находит нужный суд.</p></div>
+        <div class="card"><div class="icon">⇄</div><h3>Результаты по мере поступления</h3><p>Ответы появляются, как только их отдаёт сайт. Медленные суды не задерживают остальные, у каждого источника виден свой статус.</p></div>
+        <div class="card"><div class="icon">§</div><h3>Карточка и полный текст</h3><p>Движение дела, стороны, обжалование и исполнительные листы. Полный текст судебного акта открывается по кнопке.</p></div>
+        <div class="card"><div class="icon">▤</div><h3>Сводка по контрагенту</h3><p>Сколько дел и в каких судах, по годам, в какой роли участвует лицо, категории и результаты — графиками, сразу после поиска.</p></div>
+        <div class="card"><div class="icon">★</div><h3>Мои дела</h3><p>Отмечайте важные дела и проверяйте по ним обновления: новые события и смена результата видны сразу.</p></div>
+        <div class="card"><div class="icon">◎</div><h3>Гибкие фильтры</h3><p>Регионы, уровни судов, виды производств и период поступления дела. Видно, сколько судов будет опрошено.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="pro">
+    <div class="wrap">
+      <p class="kicker">Тарифы</p>
+      <h2>Бесплатно — для поиска, Pro — для работы</h2>
+      <p class="sub">Поиск по всем источникам бесплатен и без ограничений. Pro добавляет инструменты для тех, кто работает с делами каждый день.</p>
+      <div class="plans">
+        <div class="plan">
+          <h3>Бесплатно</h3>
+          <p class="price">навсегда</p>
+          <ul>
+            <li>Поиск по всем шести источникам</li>
+            <li>Карточки дел и полные тексты актов</li>
+            <li>Сводка по контрагенту с графиками</li>
+            <li>Избранное и история запросов</li>
+            <li>Выгрузка в CSV</li>
+          </ul>
+        </div>
+        <div class="plan pro">
+          <h3>Pro</h3>
+          <p class="price">цена по запросу</p>
+          <ul>
+            <li>Всё, что в бесплатной версии</li>
+            <li>Экспорт в Excel и PDF</li>
+            <li>Сохранённые поиски без повторных запросов к сайтам</li>
+            <li>Сравнение поисков: новые, исчезнувшие и изменившиеся дела</li>
+            <li>Мониторинг своих дел по кнопке</li>
+            <li>Лицензии для организаций на несколько рабочих мест</li>
+          </ul>
+          <p class="note">Продажа ключей скоро откроется.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how">
+    <div class="wrap">
+      <p class="kicker">Как это работает</p>
+      <h2>Ваш компьютер обращается к сайтам судов напрямую</h2>
+      <p class="sub">Никаких промежуточных серверов: приложение делает то же, что вы делали бы в браузере, только сразу на всех нужных сайтах.</p>
+      <div class="grid g3 steps">
+        <div class="step"><h3>Введите запрос</h3><p>Выберите регионы и источники. Фильтры запоминаются между запусками.</p></div>
+        <div class="step"><h3>Подтвердите проверки</h3><p>Если сайт суда показывает капчу, её картинка появится в приложении, и код введёте вы. Приложение капчи не распознаёт.</p></div>
+        <div class="step"><h3>Работайте с результатами</h3><p>Сортируйте и фильтруйте дела, открывайте карточки и тексты актов, смотрите сводку, отмечайте свои дела и выгружайте.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="privacy" style="padding-top:0">
+    <div class="wrap">
+      <div class="privacy">
+        <div>
+          <p class="kicker" style="color:var(--gold)">Приватность</p>
+          <h2>Ваши запросы остаются у вас</h2>
+          <p>У приложения нет своего сервера и учётных записей. Кого вы ищете, знают только вы и сайт суда, к которому идёт запрос. Так же, как при обычном поиске на этом сайте.</p>
+        </div>
+        <ul>
+          <li>Нет регистрации и аккаунтов</li>
+          <li>Запросы идут напрямую на официальные сайты</li>
+          <li>История и избранное хранятся локально</li>
+          <li>Никакой аналитики, рекламы и передачи данных третьим лицам</li>
+          <li>Наружу уходит только проверка обновлений программы</li>
+          <li>Капчи вводит человек, а не робот</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="block white" id="faq">
+    <div class="wrap" style="max-width:820px">
+      <p class="kicker">Вопросы</p>
+      <h2>Частые вопросы</h2>
+      <details><summary>Почему приходится вводить капчу?</summary><p>Сайты судов общей юрисдикции требуют проверочный код при каждом поиске. Приложение показывает картинку, код вводите вы. Если сайт принимает введённый код для нескольких запросов, приложение использует его повторно, и капч становится меньше.</p></details>
+      <details><summary>Почему для КАД нужен Edge или Chrome?</summary><p>Картотека арбитражных дел проверяет браузер и не пускает встроенный в приложение. Поэтому КАД открывается в вашем установленном браузере, в отдельном профиле: личный профиль, история и пароли не затрагиваются. Это ваш выбор: в фильтрах режим можно выключить, а кнопка «Искать в КАД в браузере» откроет сайт и скопирует запрос. Приложение не подменяет признаки браузера и не обходит ограничения сайта по частоте запросов.</p></details>
+      <details><summary>Нужен ли VPN?</summary><p>Наоборот: многие государственные сайты не открываются с зарубежных IP-адресов, а КАД ограничивает доступ с общих адресов VPN-сервисов. Для стабильной работы подключайтесь из России без VPN.</p></details>
+      <details><summary>Почему нельзя искать сразу по всем судам страны?</summary><p>У каждого суда свой сайт, и опрашивать их все на каждый запрос долго. К тому же это создало бы ненужную нагрузку на сайты судов. Выберите регионы, а если знаете УИД дела, приложение найдёт суд само.</p></details>
+      <details><summary>Это законно?</summary><p>Приложение получает только сведения, которые суды обязаны публиковать в открытом доступе (Федеральный закон № 262-ФЗ). Поиск запускает сам пользователь, запросы идут с его компьютера и в обычном темпе. Использовать полученные сведения нужно в рамках закона, в том числе законодательства о персональных данных.</p></details>
+      <details><summary>Почему какой-то источник показывает ошибку?</summary><p>Сайты судов иногда недоступны или меняют разметку. Статус и причина ошибки видны в панели источников. Если сайт поменял разметку, приложение сохранит снимок страницы — его можно отправить разработчику, и разбор поправят в следующем обновлении.</p></details>
+      <details><summary>Что даёт Pro и как его получить?</summary><p>Pro добавляет экспорт в Excel и PDF, сохранённые поиски, сравнение поисков и мониторинг своих дел. Ключ вводится в приложении (кнопка «Pro») и проверяется без интернета, на вашем компьютере. Продажа ключей скоро откроется.</p></details>
+      <details><summary>Как обновляется приложение?</summary><p>Приложение само проверяет, вышла ли новая версия, скачивает её в фоне и предлагает перезапуститься. Версия для Linux в формате .deb обновляется вручную.</p></details>
+
+      <details><summary>Есть ли версия для macOS?</summary><p>Готовится. Сейчас доступны версии для Windows, Linux и Android. Версия для macOS появится, когда пройдёт обязательную проверку Apple: без неё система не даст спокойно установить приложение.</p></details>
+
+
+      <details><summary>Как установить на Android и что работает на телефоне?</summary><p>Скачайте файл APK на телефон и откройте его. Android попросит разрешить установку из этого источника (браузера или «Файлов») — разрешите и нажмите «Установить». Приложение не из Google Play, поэтому система может предупредить о неизвестном разработчике. На телефоне автоматически ищутся суды общей юрисдикции (ГАС «Правосудие»), Верховный и Конституционный суды и реестр адвокатов. Мосгорсуд и КАД проверяют браузер, поэтому на телефоне они открываются кнопкой «открыть сайт». Участки мировых судей, экспорт в Excel и PDF — в версии для компьютера.</p></details>
+
+    </div>
+  </section>
+
+  <section class="block download" id="download">
+    <div class="wrap">
+      <h2>Скачайте и начните искать</h2>
+      <p class="sub" style="margin-left:auto;margin-right:auto">Установка занимает минуту. Регистрация не нужна.</p>
+      <div class="dl-options">
+        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.12/judge-search-setup-0.1.12.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 123 МБ</span></a>
+<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.12/judge-search-0.1.12.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
+      </div>
+      <p class="req">Версия 0.1.12 · нужно подключение к интернету</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <p><b>Судебный поиск</b> — независимое приложение. Оно не связано с Судебным департаментом при Верховном суде РФ, ГАС «Правосудие», картотекой арбитражных дел, Московским городским судом, Верховным и Конституционным судами РФ и Министерством юстиции РФ и не является официальным источником сведений.</p>
+      <p>Достоверные сведения о деле — на официальном сайте соответствующего суда. Пример интерфейса на этой странице содержит вымышленные данные.</p>
+
+      <p>© 2026 Судебный поиск</p>
+    </div>
+  </footer>
+  <script>
+    // Основная кнопка — под систему посетителя, если для неё есть сборка.
+    (function () {
+      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.12/judge-search-setup-0.1.12.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.12/judge-search-0.1.12.apk"}];
+      var ua = navigator.userAgent;
+      var os = /Android/i.test(ua) ? 'android' : /Windows/i.test(ua) ? 'windows' : /iPhone|iPad/i.test(ua) ? null : /Mac OS X|Macintosh/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : null;
+      var mine = downloads.filter(function (d) { return d.os === os; })[0];
+      if (!mine) return;
+      var btn = document.querySelector('.js-primary a');
+      if (btn) {
+        btn.href = mine.url;
+        btn.lastChild.textContent = ' Скачать для ' + mine.label;
+      }
+      document.querySelectorAll('.dl-option[data-os="' + os + '"]').forEach(function (a) { a.classList.add('is-mine'); });
+    })();
+  </script>
+</body>
+</html>
