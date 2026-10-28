@@ -1,0 +1,155 @@
+# Админка лендинга и рекламы (Sveltia CMS). Собирается scripts/build-landing.mjs: репозиторий и путь к картинкам
+# подставляются из package.json → judge.githubRepo и адреса сайта. Сохранение = коммит в репозиторий сайта,
+# GitHub Pages обновляет сайт через ~1 минуту. Вход — «Sign In with Token» (токен GitHub с правом на репозиторий).
+backend:
+  name: github
+  repo: TitarenkoBA/judge
+  branch: main
+  commit_messages:
+    update: "Админка: {{slug}}"
+
+media_folder: media
+public_folder: /judge/media
+locale: ru
+
+collections:
+  - name: site
+    label: Сайт и реклама
+    editor:
+      preview: false
+    files:
+      - name: landing
+        label: Тексты лендинга
+        file: content/landing.json
+        format: json
+        description: "Пустое поле — остаётся текст страницы. *Слово в звёздочках* — курсивом."
+        fields:
+          - label: Объявление вверху страницы
+            name: announcement
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Показывать, name: enabled, widget: boolean, default: false }
+              - { label: Текст, name: text, widget: string, required: false }
+              - { label: Ссылка (https://…), name: link, widget: string, required: false }
+              - { label: Текст ссылки, name: linkText, widget: string, required: false }
+          - label: Первый экран
+            name: hero
+            widget: object
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: lead, widget: text, required: false }
+          - label: Источники
+            name: sources
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: sub, widget: text, required: false }
+          - label: Возможности
+            name: features
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: sub, widget: text, required: false }
+          - label: Тарифы
+            name: pro
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: sub, widget: text, required: false }
+              - { label: Цена Pro, name: price, widget: string, required: false }
+          - label: Цены
+            name: pricing
+            widget: object
+            collapsed: true
+            description: "Пока «Показывать цены» выключено, на странице — текст из «Тарифы → Цена Pro»."
+            fields:
+              - { label: Показывать цены, name: show, widget: boolean, default: false }
+              - { label: Pro на месяц, name: month, widget: string, required: false }
+              - { label: Pro на год, name: year, widget: string, required: false }
+              - { label: Для организаций, name: firm, widget: string, required: false }
+              - { label: Примечание под ценами, name: note, widget: string, required: false }
+              - { label: "Адрес оплаты (функция платежей, https://…). Пусто — кнопок «Купить» нет", name: payUrl, widget: string, required: false, pattern: ["^(https://.+)?$", "Адрес должен начинаться с https://"] }
+          - label: Как это работает
+            name: how
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: sub, widget: text, required: false }
+          - label: Приватность
+            name: privacy
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+          - label: Вопросы
+            name: faq
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - label: Дополнительные вопросы (добавляются после основных)
+                name: extra
+                widget: list
+                required: false
+                fields:
+                  - { label: Вопрос, name: q, widget: string }
+                  - { label: Ответ, name: a, widget: text }
+          - label: Скачать
+            name: download
+            widget: object
+            collapsed: true
+            fields:
+              - { label: Заголовок, name: title, widget: string, required: false }
+              - { label: Подзаголовок, name: sub, widget: text, required: false }
+
+      - name: ads
+        label: Реклама в приложении
+        file: ads/ads.json
+        format: json
+        description: >-
+          Блоки показываются только пользователям без Pro. Приложение забирает этот файл при запуске
+          (обновление у пользователей — в течение ~6 часов). Реклама в интернете в РФ подлежит маркировке:
+          укажите рекламодателя и токен erid от оператора рекламных данных.
+        fields:
+          - { label: Показывать рекламу (общий выключатель), name: enabled, widget: boolean, default: false }
+          - label: Блоки
+            name: items
+            widget: list
+            summary: "{{fields.id}} — {{fields.title}} ({{fields.placement}})"
+            fields:
+              - { label: Идентификатор (латиницей, уникальный), name: id, widget: string, pattern: ['^[a-z0-9-]+$', 'латиница, цифры, дефис'] }
+              - { label: Включён, name: enabled, widget: boolean, default: true }
+              - label: Вид
+                name: kind
+                widget: select
+                options: [{ label: Баннер (картинка), value: banner }, { label: Текст, value: text }]
+                default: text
+              - { label: Заголовок, name: title, widget: string, required: false, hint: Для текстового блока обязателен }
+              - { label: Текст, name: text, widget: text, required: false }
+              - { label: Картинка баннера (PNG/JPG до 600 КБ, ширина ~600 px), name: image, widget: image, required: false }
+              - { label: Ссылка (https://… или judge:pro), name: url, widget: string, pattern: ['^(https://|judge:pro$)', 'https://… или judge:pro'], hint: "judge:pro — блок о версии Pro: клик открывает окно Pro в приложении, подпись «Возможности Pro», рекламодатель и erid не нужны" }
+              - { label: Текст кнопки, name: cta, widget: string, required: false, hint: Например «Подробнее» }
+              - label: Место
+                name: placement
+                widget: select
+                options:
+                  - { label: Слева под «Где ищем» (баннер или текст), value: sidebar }
+                  - { label: Строка над результатами, value: results-top }
+                default: sidebar
+              - label: Платформы
+                name: platforms
+                widget: select
+                multiple: true
+                required: false
+                hint: Пусто — везде
+                options: [{ label: Компьютер, value: desktop }, { label: Android, value: android }]
+              - { label: Показывать с, name: start, widget: datetime, required: false, date_format: DD.MM.YYYY, time_format: false, format: YYYY-MM-DD }
+              - { label: Показывать по (включительно), name: end, widget: datetime, required: false, date_format: DD.MM.YYYY, time_format: false, format: YYYY-MM-DD }
+              - { label: Вес (чем больше, тем чаще среди блоков того же места), name: weight, widget: number, value_type: int, default: 1, min: 0, required: false }
+              - { label: Рекламодатель (наименование, ИНН), name: advertiser, widget: string, required: false }
+              - { label: Токен маркировки (erid), name: erid, widget: string, required: false }

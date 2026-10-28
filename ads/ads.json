@@ -1,0 +1,54 @@
+{
+  "enabled": true,
+  "items": [
+    {
+      "id": "pro-monitoring",
+      "enabled": true,
+      "kind": "banner",
+      "image": "../media/pro-monitoring.png",
+      "url": "judge:pro",
+      "cta": "Подробнее о Pro",
+      "placement": "sidebar",
+      "platforms": [],
+      "weight": 1
+    },
+    {
+      "id": "pro-dossier",
+      "enabled": true,
+      "kind": "banner",
+      "image": "../media/pro-dossier.png",
+      "url": "judge:pro",
+      "cta": "Подробнее о Pro",
+      "placement": "sidebar",
+      "platforms": [],
+      "weight": 1
+    },
+    {
+      "id": "pro-line",
+      "enabled": true,
+      "kind": "text",
+      "title": "Pro:",
+      "text": "уведомления по вашим делам, досье контрагента в PDF, пакетная проверка ИНН",
+      "url": "judge:pro",
+      "cta": "Подробнее",
+      "placement": "results-top",
+      "platforms": [],
+      "weight": 1
+    },
+    {
+      "id": "test-banner",
+      "enabled": false,
+      "kind": "banner",
+      "title": "Тестовый баннер",
+      "text": "Так выглядит реклама стороннего рекламодателя. Перед включением заполните рекламодателя и erid.",
+      "image": "../media/test-banner.png",
+      "url": "https://titarenkoba.github.io/judge/",
+      "cta": "Подробнее",
+      "placement": "sidebar",
+      "platforms": [],
+      "weight": 1,
+      "advertiser": "",
+      "erid": ""
+    }
+  ]
+}
