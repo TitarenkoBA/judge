@@ -112,6 +112,7 @@
     .plan li { padding: 5px 0 5px 24px; position: relative; font-size: 15px; }
     .plan li::before { content: "\2713"; position: absolute; left: 0; color: #16a34a; font-weight: 700; }
     .plan .note { color: #64748b; font-size: 13px; margin-top: 14px; }
+    .pro-tag { display: inline-block; vertical-align: middle; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 6px; background: #fef3c7; color: #92400e; }
     .plan .buy { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
     .plan .buy .btn { padding: 10px 16px; font-size: 15px; }
     .btn-navy { background: var(--navy); color: #fff; }
@@ -202,11 +203,11 @@
   <header class="hero">
     <div class="wrap">
       <h1 data-cms="hero.title">Все суды России — <em>в одной строке поиска</em></h1>
-      <p data-cms="hero.lead" class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов общей юрисдикции, арбитражных судов, судов Москвы, Верховного и Конституционного судов, реестр адвокатов и соберёт результаты на одном экране.</p>
+      <p data-cms="hero.lead" class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов, ФНС, Федресурса, ФССП и госзакупок и соберёт дела, банкротства, долги и сведения о компании на одном экране.</p>
       <div class="cta">
-        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.13/judge-search-setup-0.1.13.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
+        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
         <a class="btn btn-ghost" href="#download">Другие системы</a>
-        <span class="dl-meta">Версия 0.1.13 · Windows, Android</span>
+        <span class="dl-meta">Версия 0.1.14 · Windows, Android</span>
       </div>
 
       <div class="mock" aria-label="Пример интерфейса (данные вымышлены)">
@@ -221,7 +222,9 @@
             <div class="src"><span class="dot"></span>КАД<b>3</b></div>
             <div class="src"><span class="dot busy"></span>Мосгорсуд<b>…</b></div>
             <div class="src"><span class="dot"></span>ВС РФ<b>1</b></div>
-            <div class="src"><span class="dot wait"></span>Адвокаты<b>2</b></div>
+            <div class="src"><span class="dot"></span>ЕГРЮЛ<b>1</b></div>
+              <div class="src"><span class="dot"></span>Банкротства<b>0</b></div>
+              <div class="src"><span class="dot wait"></span>ФССП<b>2</b></div>
             <div class="captcha">Введите код с картинки<br><span class="code">4 7 1 9 2</span></div>
           </div>
           <div class="mock-main">
@@ -244,8 +247,8 @@
   <section class="block" id="sources">
     <div class="wrap">
       <p class="kicker">Источники</p>
-      <h2 data-cms="sources.title">Шесть источников вместо десятков вкладок</h2>
-      <p data-cms="sources.sub" class="sub">Поиск идёт по официальным сайтам и только по общедоступным сведениям, которые суды публикуют по закону об открытости правосудия (262-ФЗ).</p>
+      <h2 data-cms="sources.title">Одиннадцать источников вместо десятков вкладок</h2>
+      <p data-cms="sources.sub" class="sub">Поиск идёт по официальным сайтам и только по общедоступным сведениям: суды публикуют их по закону об открытости правосудия (262-ФЗ), ФНС, Федресурс, ФССП и ЕИС — по своим законам.</p>
       <div class="grid g3">
         <div class="card source"><span class="badge t-s">ГАС «Правосудие»</span><h3>Суды общей юрисдикции</h3><p>Районные, областные, апелляционные, кассационные и военные суды — более 2 300 сайтов. Мировые судьи: выбранные вами участки (до трёх за поиск, на входе каждого — код с картинки).</p></div>
         <div class="card source"><span class="badge t-m">Мосгорсуд</span><h3>Суды Москвы</h3><p>Московский городской суд и районные суды Москвы.</p></div>
@@ -253,6 +256,11 @@
         <div class="card source"><span class="badge t-v">ВС РФ</span><h3>Верховный суд</h3><p>Дела и жалобы во всех инстанциях, движение дела и итоговые акты.</p></div>
         <div class="card source"><span class="badge t-ks">КС РФ</span><h3>Конституционный суд</h3><p>Решения Конституционного суда Российской Федерации.</p></div>
         <div class="card source"><span class="badge" style="background:#d1fae5;color:#065f46">Минюст</span><h3>Реестр адвокатов</h3><p>Статус, регистрационный номер, адвокатская палата, прежние ФИО.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>ЕГРЮЛ и ЕГРИП</h3><p>Реквизиты, руководитель, даты регистрации и прекращения организаций и ИП.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>«Прозрачный бизнес»</h3><p>Статус, вид деятельности, МСП и признаки риска: недостоверные сведения, «массовый» адрес и руководитель, дисквалифицированные лица.</p></div>
+        <div class="card source"><span class="badge" style="background:#ffedd5;color:#9a3412">Федресурс</span><h3>Банкротства</h3><p>Сведения о банкротстве организаций, граждан и ИП из ЕФРСБ: номер дела и его состояние.</p></div>
+        <div class="card source"><span class="badge" style="background:#fee2e2;color:#991b1b">ФССП</span><h3>Исполнительные производства</h3><p>Долги по исполнительным документам: по ИНН, названию организации или номеру производства. Код с картинки вводите вы.</p></div>
+        <div class="card source"><span class="badge" style="background:#e0e7ff;color:#3730a3">ЕИС</span><h3>Недобросовестные поставщики</h3><p>Реестр недобросовестных поставщиков госзакупок по 44-ФЗ, 223-ФЗ и ПП РФ № 615.</p></div>
       </div>
     </div>
   </section>
@@ -267,7 +275,10 @@
         <div class="card"><div class="icon">⇄</div><h3>Результаты по мере поступления</h3><p>Ответы появляются, как только их отдаёт сайт. Медленные суды не задерживают остальные, у каждого источника виден свой статус.</p></div>
         <div class="card"><div class="icon">§</div><h3>Карточка и полный текст</h3><p>Движение дела, стороны, обжалование и исполнительные листы. Полный текст судебного акта открывается по кнопке.</p></div>
         <div class="card"><div class="icon">▤</div><h3>Сводка по контрагенту</h3><p>Сколько дел и в каких судах, по годам, в какой роли участвует лицо, категории и результаты — графиками, сразу после поиска.</p></div>
-        <div class="card"><div class="icon">★</div><h3>Мои дела</h3><p>Отмечайте важные дела и проверяйте по ним обновления: новые события и смена результата видны сразу.</p></div>
+        <div class="card"><div class="icon">★</div><h3>Мои дела</h3><p>Отмечайте важные дела и проверяйте по ним обновления. В Pro приложение проверяет их само и присылает уведомление о новых событиях; к делам — заметки, метки и клиенты.</p></div>
+        <div class="card"><div class="icon">✓</div><h3>Проверка контрагента целиком</h3><p>Суды, банкротства, долги у приставов, сведения ФНС и госзакупки по одному ИНН. Сведения из реестров — на отдельной вкладке.</p></div>
+        <div class="card"><div class="icon">▣</div><h3>Досье в PDF <span class="pro-tag">Pro</span></h3><p>Готовый отчёт по контрагенту: где искали, сводка, дела со ссылками, банкротства, ФССП и ФНС — для клиента или руководителя.</p></div>
+        <div class="card"><div class="icon">≡</div><h3>Пакетная проверка <span class="pro-tag">Pro</span></h3><p>Список ИНН или ФИО из Excel — до 200 за раз. Итог «сколько дел у каждого» по источникам и выгрузка в Excel.</p></div>
         <div class="card"><div class="icon">◎</div><h3>Гибкие фильтры</h3><p>Регионы, уровни судов, виды производств и период поступления дела. Видно, сколько судов будет опрошено.</p></div>
       </div>
     </div>
@@ -353,14 +364,15 @@
         <div>
           <p class="kicker" style="color:var(--gold)">Приватность</p>
           <h2 data-cms="privacy.title">Ваши запросы остаются у вас</h2>
-          <p>У приложения нет своего сервера и учётных записей. Кого вы ищете, знают только вы и сайт суда, к которому идёт запрос. Так же, как при обычном поиске на этом сайте.</p>
+          <p>У приложения нет своего сервера и учётных записей. Кого вы ищете, знают только вы и сайт суда или ведомства, к которому идёт запрос. Так же, как при обычном поиске на этом сайте.</p>
         </div>
         <ul>
           <li>Нет регистрации и аккаунтов</li>
           <li>Запросы идут напрямую на официальные сайты</li>
           <li>История и избранное хранятся локально</li>
-          <li>Никакой аналитики, рекламы и передачи данных третьим лицам</li>
-          <li>Наружу уходит только проверка обновлений программы</li>
+          <li>Никакой аналитики и передачи ваших запросов третьим лицам</li>
+          <li>Кроме официальных сайтов, приложение обращается только к сайту программы: обновления и объявления бесплатной версии</li>
+          <li>Реклама в бесплатной версии — без слежки и с пометкой «Реклама»; в Pro её нет</li>
           <li>Капчи вводит человек, а не робот</li>
         </ul>
       </div>
@@ -377,10 +389,12 @@
       <details><summary>Почему нельзя искать сразу по всем судам страны?</summary><p>У каждого суда свой сайт, и опрашивать их все на каждый запрос долго. К тому же это создало бы ненужную нагрузку на сайты судов. Выберите регионы, а если знаете УИД дела, приложение найдёт суд само.</p></details>
       <details><summary>Это законно?</summary><p>Приложение получает только сведения, которые суды обязаны публиковать в открытом доступе (Федеральный закон № 262-ФЗ). Поиск запускает сам пользователь, запросы идут с его компьютера и в обычном темпе. Использовать полученные сведения нужно в рамках закона, в том числе законодательства о персональных данных.</p></details>
       <details><summary>Почему какой-то источник показывает ошибку?</summary><p>Сайты судов иногда недоступны или меняют разметку. Статус и причина ошибки видны в панели источников. Если сайт поменял разметку, приложение сохранит снимок страницы — его можно отправить разработчику, и разбор поправят в следующем обновлении.</p></details>
-      <details><summary>Что даёт Pro и как его получить?</summary><p>Pro добавляет экспорт в Excel и PDF, сохранённые поиски, сравнение поисков и мониторинг своих дел. Ключ вводится в приложении (кнопка «Pro») и проверяется без интернета, на вашем компьютере. Продажа ключей скоро откроется.</p></details>
+      <details><summary>Что даёт Pro и как его получить?</summary><p>Pro добавляет экспорт в Excel и PDF, сохранённые поиски и их сравнение, мониторинг своих дел с уведомлениями, пакетную проверку списка ИНН и ФИО, досье контрагента в PDF, заметки и метки к делам, перенос данных между компьютером и телефоном. Для организаций — общий список дел команды и приоритетная поддержка. Ключ вводится в приложении (кнопка «Pro») и проверяется без интернета, на вашем устройстве. Продажа ключей скоро откроется.</p></details>
+      <details><summary>Откуда сведения о банкротствах, долгах и компаниях?</summary><p>С официальных сайтов: ФНС (ЕГРЮЛ, ЕГРИП, «Прозрачный бизнес»), Федресурса (ЕФРСБ), ФССП (банк данных исполнительных производств) и ЕИС «Закупки». Приложение показывает их так же, как сами сайты, в момент запроса. ФССП ищет граждан только с датой рождения, поэтому по одному ФИО этот источник пропускается — ищите по ИНН. Сайт ФССП почти всегда просит код с картинки и ограничивает частоту запросов.</p></details>
+      <details><summary>Как работает «Дела команды»?</summary><p>Для лицензии «для организаций»: сотрудники выбирают общую папку (сетевой диск, Яндекс.Диск, Dropbox), и каждый видит «Мои дела» коллег с заметками. Сервер не нужен — данные остаются в вашей папке.</p></details>
       <details><summary>Как обновляется приложение?</summary><p>Приложение само проверяет, вышла ли новая версия, скачивает её в фоне и предлагает перезапуститься. Версия для Linux в формате .deb обновляется вручную.</p></details>
       <details><summary>Есть ли версия для macOS?</summary><p>Готовится. Сейчас доступны версии для Windows, Linux и Android. Версия для macOS появится, когда пройдёт обязательную проверку Apple: без неё система не даст спокойно установить приложение.</p></details>
-      <details><summary>Как установить на Android и что работает на телефоне?</summary><p>Скачайте файл APK на телефон и откройте его. Android попросит разрешить установку из этого источника (браузера или «Файлов») — разрешите и нажмите «Установить». Приложение не из Google Play, поэтому система может предупредить о неизвестном разработчике. На телефоне ищутся суды общей юрисдикции (ГАС «Правосудие»), Верховный и Конституционный суды, реестр адвокатов, Мосгорсуд и КАД — сайты, которым нужен браузер, открываются внутри приложения. Участки мировых судей, экспорт в Excel и PDF — в версии для компьютера.</p></details>
+      <details><summary>Как установить на Android и что работает на телефоне?</summary><p>Скачайте файл APK на телефон и откройте его. Android попросит разрешить установку из этого источника (браузера или «Файлов») — разрешите и нажмите «Установить». Приложение не из Google Play, поэтому система может предупредить о неизвестном разработчике. На телефоне ищутся суды общей юрисдикции (ГАС «Правосудие»), Верховный и Конституционный суды, реестр адвокатов, Мосгорсуд, КАД и реестры (ФНС, Федресурс, ФССП, ЕИС) — сайты, которым нужен браузер, открываются внутри приложения. Участки мировых судей, экспорт в Excel и PDF — в версии для компьютера.</p></details>
       <div data-cms-faq></div>
     </div>
   </section>
@@ -390,24 +404,25 @@
       <h2 data-cms="download.title">Скачайте и начните искать</h2>
       <p data-cms="download.sub" class="sub" style="margin-left:auto;margin-right:auto">Установка занимает минуту. Регистрация не нужна.</p>
       <div class="dl-options">
-        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.13/judge-search-setup-0.1.13.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 124 МБ</span></a>
-<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.13/judge-search-0.1.13.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
+        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 124 МБ</span></a>
+<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-0.1.14.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
       </div>
-      <p class="req">Версия 0.1.13 · нужно подключение к интернету</p>
+      <p class="req">Версия 0.1.14 · нужно подключение к интернету</p>
     </div>
   </section>
 
   <footer>
     <div class="wrap">
-      <p><b>Судебный поиск</b> — независимое приложение. Оно не связано с Судебным департаментом при Верховном суде РФ, ГАС «Правосудие», картотекой арбитражных дел, Московским городским судом, Верховным и Конституционным судами РФ и Министерством юстиции РФ и не является официальным источником сведений.</p>
+      <p><b>Судебный поиск</b> — независимое приложение. Оно не связано с Судебным департаментом при Верховном суде РФ, ГАС «Правосудие», картотекой арбитражных дел, Московским городским судом, Верховным и Конституционным судами РФ, Министерством юстиции РФ, ФНС России, Федресурсом, ФССП России и ЕИС в сфере закупок и не является официальным источником сведений.</p>
       <p>Достоверные сведения о деле — на официальном сайте соответствующего суда. Пример интерфейса на этой странице содержит вымышленные данные.</p>
+      <p class="legal-links"><a href="legal/eula.html">Лицензионное соглашение</a><a href="legal/privacy.html">Политика конфиденциальности</a></p>
       <p>© 2026 Судебный поиск</p>
     </div>
   </footer>
   <script>
     // Основная кнопка — под систему посетителя, если для неё есть сборка.
     (function () {
-      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.13/judge-search-setup-0.1.13.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.13/judge-search-0.1.13.apk"}];
+      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-0.1.14.apk"}];
       var ua = navigator.userAgent;
       var os = /Android/i.test(ua) ? 'android' : /Windows/i.test(ua) ? 'windows' : /iPhone|iPad/i.test(ua) ? null : /Mac OS X|Macintosh/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : null;
       var mine = downloads.filter(function (d) { return d.os === os; })[0];
