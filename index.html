@@ -264,9 +264,9 @@
       <h1 data-cms="hero.title">Все суды России — <em>в одной строке поиска</em></h1>
       <p data-cms="hero.lead" class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов, ФНС, Федресурса, ФССП и госзакупок и соберёт дела, банкротства, долги и сведения о компании на одном экране.</p>
       <div class="cta">
-        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.16/judge-search-setup-0.1.16.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
+        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
         <a class="btn btn-ghost" href="#download">Другие системы</a>
-        <span class="dl-meta">Версия 0.1.16 · Windows, Android</span>
+        <span class="dl-meta">Версия 0.1.17 · Windows, Android</span>
       </div>
 
       <div class="mock" aria-label="Пример интерфейса (данные вымышлены)">
@@ -473,10 +473,10 @@
       <h2 data-cms="download.title">Скачайте и начните искать</h2>
       <p data-cms="download.sub" class="sub" style="margin-left:auto;margin-right:auto">Установка занимает минуту. Регистрация не нужна.</p>
       <div class="dl-options">
-        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.16/judge-search-setup-0.1.16.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 124 МБ</span></a>
-<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.16/judge-search-0.1.16.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
+        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 117 МБ</span></a>
+<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-0.1.17.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
       </div>
-      <p class="req">Версия 0.1.16 · нужно подключение к интернету</p>
+      <p class="req">Версия 0.1.17 · нужно подключение к интернету</p>
     </div>
   </section>
 
@@ -491,7 +491,7 @@
   <script>
     // Основная кнопка — под систему посетителя, если для неё есть сборка.
     (function () {
-      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.16/judge-search-setup-0.1.16.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.16/judge-search-0.1.16.apk"}];
+      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-0.1.17.apk"}];
       var ua = navigator.userAgent;
       var os = /Android/i.test(ua) ? 'android' : /Windows/i.test(ua) ? 'windows' : /iPhone|iPad/i.test(ua) ? null : /Mac OS X|Macintosh/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : null;
       var mine = downloads.filter(function (d) { return d.os === os; })[0];
