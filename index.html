@@ -20,6 +20,8 @@
       --radius: 14px;
     }
     * { box-sizing: border-box; }
+    /* Атрибут hidden сильнее любого display (иначе .plan .buy { display: flex } показывал скрытые кнопки «Купить»). */
+    [hidden] { display: none !important; }
     html { scroll-behavior: smooth; }
     body {
       margin: 0;
@@ -179,6 +181,62 @@
       .g5, .g4 { grid-template-columns: 1fr; }
       section.block { padding: 56px 0; }
     }
+    /* ── Обновление 0.1.15: глубина, движение, закреплённая шапка ── */
+    .top { position: sticky; top: 0; z-index: 50; transition: background .25s, box-shadow .25s, backdrop-filter .25s; }
+    .top.scrolled { background: rgba(19, 41, 75, .86); backdrop-filter: saturate(140%) blur(10px); box-shadow: 0 6px 24px rgba(0,0,0,.18); }
+    .nav-links a { position: relative; }
+    .nav-links a::after { content: ""; position: absolute; left: 0; right: 0; bottom: -6px; height: 2px; background: var(--gold); transform: scaleX(0); transform-origin: left; transition: transform .25s; }
+    .nav-links a:hover::after { transform: scaleX(1); }
+
+    .hero { position: relative; isolation: isolate; }
+    .hero::before {
+      content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+      background-image: linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px);
+      background-size: 44px 44px;
+      mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 30%, transparent 75%);
+      -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 30%, transparent 75%);
+    }
+    .glow { position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); opacity: .55; pointer-events: none; }
+    .glow.g1 { width: 420px; height: 420px; background: #2a78d6; top: -140px; right: -80px; animation: drift 18s ease-in-out infinite alternate; }
+    .glow.g2 { width: 320px; height: 320px; background: #b0852f; top: 160px; left: -140px; opacity: .35; animation: drift 22s ease-in-out infinite alternate-reverse; }
+    @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-60px, 40px) scale(1.12); } }
+    .hero h1 em { background: linear-gradient(90deg, var(--gold), #f6dba0, var(--gold)); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
+    @keyframes shine { to { background-position: 200% center; } }
+    .btn { transition: transform .15s, box-shadow .2s, background .2s; }
+    .btn-gold:hover { transform: translateY(-1px); box-shadow: 0 8px 24px rgba(227,182,91,.35); }
+    .mock { transform: perspective(1400px) rotateX(4deg); transform-origin: 50% 100%; transition: transform .6s; }
+    .mock:hover { transform: perspective(1400px) rotateX(0deg); }
+    .mock-search .typed::after { content: ""; display: inline-block; width: 1px; height: 1.05em; margin-left: 2px; vertical-align: -2px; background: var(--ink); animation: caret 1s steps(1) infinite; }
+    @keyframes caret { 50% { opacity: 0; } }
+    .dot.busy, .dot.wait { animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { transform: scale(1.45); opacity: .55; } }
+    .mock-main tbody tr { animation: rowin .45s both; }
+    .mock-main tbody tr:nth-child(2) { animation-delay: .15s; }
+    .mock-main tbody tr:nth-child(3) { animation-delay: .3s; }
+    .mock-main tbody tr:nth-child(4) { animation-delay: .45s; }
+    @keyframes rowin { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+    .stats { background: #fff; border-bottom: 1px solid var(--line); }
+    .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding-top: 26px; padding-bottom: 26px; }
+    .stat b { display: block; font-size: clamp(26px, 3.2vw, 34px); color: var(--navy); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+    .stat span { color: var(--muted); font-size: 14px; }
+
+    .card, .plan, details, .dl-option { transition: transform .2s, box-shadow .2s, border-color .2s; }
+    .card:hover, .dl-option:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(19,41,75,.10); border-color: #cfd8e6; }
+    .plan:hover { transform: translateY(-3px); box-shadow: 0 14px 36px rgba(19,41,75,.12); }
+    .plan.pro { position: relative; }
+    .plan.pro::before { content: "Для работы"; position: absolute; top: -11px; right: 18px; background: var(--gold); color: var(--navy); font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 99px; letter-spacing: .02em; }
+    .icon { transition: transform .25s, background .25s; }
+    .card:hover .icon { transform: rotate(-6deg) scale(1.08); background: #fdf3dc; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+
+    @media (max-width: 760px) { .stats .wrap { grid-template-columns: repeat(2, 1fr); } .mock { transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+      .reveal { opacity: 1; transform: none; }
+      .mock { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -201,13 +259,14 @@
   </div>
 
   <header class="hero">
+    <span class="glow g1" aria-hidden="true"></span><span class="glow g2" aria-hidden="true"></span>
     <div class="wrap">
       <h1 data-cms="hero.title">Все суды России — <em>в одной строке поиска</em></h1>
       <p data-cms="hero.lead" class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов, ФНС, Федресурса, ФССП и госзакупок и соберёт дела, банкротства, долги и сведения о компании на одном экране.</p>
       <div class="cta">
-        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
+        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.15/judge-search-setup-0.1.15.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
         <a class="btn btn-ghost" href="#download">Другие системы</a>
-        <span class="dl-meta">Версия 0.1.14 · Windows, Android</span>
+        <span class="dl-meta">Версия 0.1.15 · Windows, Android</span>
       </div>
 
       <div class="mock" aria-label="Пример интерфейса (данные вымышлены)">
@@ -228,7 +287,7 @@
             <div class="captcha">Введите код с картинки<br><span class="code">4 7 1 9 2</span></div>
           </div>
           <div class="mock-main">
-            <h4>Дела · 18</h4>
+            <h4 data-mock-total>Дела · 18</h4>
             <table class="rows">
               <thead><tr><th>Источник</th><th>Номер дела</th><th class="hide-sm">Суд</th><th>Стороны</th></tr></thead>
               <tbody>
@@ -243,6 +302,15 @@
       </div>
     </div>
   </header>
+
+  <div class="stats" aria-label="Коротко в цифрах">
+    <div class="wrap">
+      <div class="stat"><b data-count="2300" data-suffix="+">2 300+</b><span>сайтов судов</span></div>
+      <div class="stat"><b data-count="11">11</b><span>источников: суды и реестры</span></div>
+      <div class="stat"><b data-count="1">1</b><span>строка поиска на всё</span></div>
+      <div class="stat"><b data-count="0">0</b><span>серверов между вами и сайтами</span></div>
+    </div>
+  </div>
 
   <section class="block" id="sources">
     <div class="wrap">
@@ -320,6 +388,7 @@
             <li>Досье контрагента в PDF: суды, банкротства, ФССП, ФНС</li>
             <li>Заметки, метки и клиенты у дел, список дел клиента в Excel</li>
             <li>Перенос «Моих дел» между компьютером и телефоном файлом</li>
+            <li>Сортировка и фильтры по столбцам, настраиваемые графики сводки</li>
           </ul>
           <p class="note" data-price="note" hidden></p>
           <p class="note">Продажа ключей скоро откроется.</p>
@@ -404,10 +473,10 @@
       <h2 data-cms="download.title">Скачайте и начните искать</h2>
       <p data-cms="download.sub" class="sub" style="margin-left:auto;margin-right:auto">Установка занимает минуту. Регистрация не нужна.</p>
       <div class="dl-options">
-        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 124 МБ</span></a>
-<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-0.1.14.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
+        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.15/judge-search-setup-0.1.15.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 124 МБ</span></a>
+<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.15/judge-search-0.1.15.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
       </div>
-      <p class="req">Версия 0.1.14 · нужно подключение к интернету</p>
+      <p class="req">Версия 0.1.15 · нужно подключение к интернету</p>
     </div>
   </section>
 
@@ -422,7 +491,7 @@
   <script>
     // Основная кнопка — под систему посетителя, если для неё есть сборка.
     (function () {
-      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-setup-0.1.14.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.14/judge-search-0.1.14.apk"}];
+      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.15/judge-search-setup-0.1.15.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.15/judge-search-0.1.15.apk"}];
       var ua = navigator.userAgent;
       var os = /Android/i.test(ua) ? 'android' : /Windows/i.test(ua) ? 'windows' : /iPhone|iPad/i.test(ua) ? null : /Mac OS X|Macintosh/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : null;
       var mine = downloads.filter(function (d) { return d.os === os; })[0];
@@ -482,6 +551,104 @@
           bar.hidden = false;
         }
       }).catch(function () {});
+    })();
+  </script>
+  <script>
+    // Движение на странице: шапка при прокрутке, появление блоков, счётчики, «живой» пример интерфейса.
+    (function () {
+      var reduced = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var top = document.querySelector('.top');
+      var onScroll = function () { if (top) top.classList.toggle('scrolled', window.scrollY > 8); };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+      if (reduced) return;
+
+      // Появление блоков при прокрутке (карточки в сетке — по очереди). Положение проверяется при прокрутке
+      // и изменении размера; через 4 с всё, что ещё не показано, показывается без анимации — контент
+      // не может остаться невидимым, даже если браузер не присылает события.
+      var pending = Array.prototype.slice.call(document.querySelectorAll('section.block h2, section.block .sub, .card, .plan, .step, .privacy, details, .dl-option'));
+      var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+      pending.forEach(function (el) {
+        var i = Array.prototype.indexOf.call(el.parentNode.children, el);
+        el.style.transitionDelay = Math.min(i, 8) * 60 + 'ms';
+        el.classList.add('reveal');
+      });
+      function count(el) {
+        var to = Number(el.getAttribute('data-count')), suffix = el.getAttribute('data-suffix') || '', t0 = Date.now();
+        (function step() {
+          var p = Math.min(1, (Date.now() - t0) / 1200), v = Math.round(to * (1 - Math.pow(1 - p, 3)));
+          el.textContent = v.toLocaleString('ru-RU') + suffix;
+          if (p < 1) setTimeout(step, 16);
+        })();
+      }
+      function check() {
+        var h = window.innerHeight || document.documentElement.clientHeight;
+        pending = pending.filter(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < h * 0.92 && r.bottom > 0) { el.classList.add('in'); return false; }
+          return true;
+        });
+        counters = counters.filter(function (el) {
+          var r = el.getBoundingClientRect();
+          if (r.top < h && r.bottom > 0) { count(el); return false; }
+          return true;
+        });
+      }
+      var queued = false;
+      function onMove() { if (!queued) { queued = true; setTimeout(function () { queued = false; check(); }, 60); } }
+      window.addEventListener('scroll', onMove, { passive: true });
+      window.addEventListener('resize', onMove);
+      check();
+      setTimeout(function () {
+        pending.forEach(function (el) { el.style.transitionDelay = '0ms'; el.classList.add('in'); });
+        pending = [];
+      }, 4000);
+
+      // Пример интерфейса: запросы «печатаются», строки появляются заново.
+      var box = document.querySelector('.mock-search');
+      var tbody = document.querySelector('.mock-main tbody');
+      var total = document.querySelector('[data-mock-total]');
+      if (!box || !tbody) return;
+      var typed = box.children[0], chip = box.children[1];
+      typed.classList.add('typed');
+      var queries = [
+        ['Иванов Иван Иванович', 'Участник дела', 18],
+        ['7707083893', 'ИНН участника', 100],
+        ['А40-12345/2026', 'Номер арбитражного дела', 1],
+        ['ФС № 012345678', 'Исполнительный документ', 2]
+      ];
+      var qi = 0;
+      function type(text, done) {
+        var i = 0;
+        (function next() {
+          typed.textContent = text.slice(0, i);
+          if (i++ < text.length) setTimeout(next, 55 + Math.random() * 45); else done();
+        })();
+      }
+      function erase(done) {
+        (function next() {
+          var t = typed.textContent;
+          if (!t) return done();
+          typed.textContent = t.slice(0, -1);
+          setTimeout(next, 22);
+        })();
+      }
+      function cycle() {
+        var q = queries[qi++ % queries.length];
+        erase(function () {
+          chip.style.opacity = '0';
+          type(q[0], function () {
+            chip.textContent = q[1];
+            chip.style.transition = 'opacity .3s';
+            chip.style.opacity = '1';
+            if (total) total.textContent = 'Дела · ' + q[2];
+            // Перезапуск анимации строк.
+            Array.prototype.forEach.call(tbody.children, function (tr) { tr.style.animation = 'none'; void tr.offsetWidth; tr.style.animation = ''; });
+            setTimeout(cycle, 3200);
+          });
+        });
+      }
+      setTimeout(cycle, 2600);
     })();
   </script>
 </body>
