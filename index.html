@@ -3,20 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Судебный поиск — все суды России в одной строке</title>
-  <meta name="description" content="Настольное приложение для поиска дел сразу по сайтам судов общей юрисдикции, арбитражных судов, судов Москвы, Верховного суда и по реестру адвокатов. Работает на вашем компьютере, без серверов.">
+  <title>Досье — проверка контрагента: суды, банкротства, ФССП, ФНС | бесплатно</title>
+  <meta name="description" content="Бесплатная программа для проверки людей и компаний по официальным источникам: дела в судах (ГАС «Правосудие», КАД, Мосгорсуд), банкротства, долги ФССП, ЕГРЮЛ, «Прозрачный бизнес», отчётность ФНС. Одна строка поиска, без регистрации и серверов.">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://TitarenkoBA.github.io/judge/">
+  <meta name="theme-color" content="#0b2530">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ru_RU">
+  <meta property="og:site_name" content="Досье">
+  <meta property="og:title" content="Досье — проверка людей и компаний по официальным источникам">
+  <meta property="og:description" content="Суды, банкротства, долги ФССП, ФНС и госзакупки — в одной строке поиска. Бесплатно, без регистрации, на вашем компьютере.">
+  <meta property="og:url" content="https://TitarenkoBA.github.io/judge/">
+  <meta property="og:image" content="https://TitarenkoBA.github.io/judge/og-image.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"Досье","alternateName":"Судебный поиск","description":"Проверка людей и компаний по официальным источникам: суды (ГАС «Правосудие», КАД, Мосгорсуд, ВС и КС РФ), банкротства (Федресурс), исполнительные производства (ФССП), ФНС (ЕГРЮЛ, «Прозрачный бизнес», МСП, бухгалтерская отчётность), реестр недобросовестных поставщиков.","applicationCategory":"BusinessApplication","operatingSystem":"Windows, Android","softwareVersion":"0.1.18","url":"https://TitarenkoBA.github.io/judge/","image":"https://TitarenkoBA.github.io/judge/og-image.png","inLanguage":"ru","offers":{"@type":"Offer","price":"0","priceCurrency":"RUB"},"downloadUrl":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-setup-0.1.18.exe"}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Почему приходится вводить капчу?","acceptedAnswer":{"@type":"Answer","text":"Сайты судов общей юрисдикции требуют проверочный код при каждом поиске. Приложение показывает картинку, код вводите вы. Если сайт принимает введённый код для нескольких запросов, приложение использует его повторно, и капч становится меньше."}},{"@type":"Question","name":"Как приложение ищет в КАД?","acceptedAnswer":{"@type":"Answer","text":"Картотека арбитражных дел проверяет браузер. На Windows приложение открывает КАД во встроенном в систему Edge (WebView2), на других системах — в вашем установленном Edge или Chrome, в отдельном профиле: личный профиль, история и пароли не затрагиваются. Это ваш выбор: в фильтрах режим можно выключить, а кнопка «Искать в КАД в браузере» откроет сайт и скопирует запрос. Приложение не подменяет признаки браузера и не обходит ограничения сайта по частоте запросов."}},{"@type":"Question","name":"Нужен ли VPN?","acceptedAnswer":{"@type":"Answer","text":"Наоборот: многие государственные сайты не открываются с зарубежных IP-адресов, а КАД ограничивает доступ с общих адресов VPN-сервисов. Для стабильной работы подключайтесь из России без VPN."}},{"@type":"Question","name":"Почему нельзя искать сразу по всем судам страны?","acceptedAnswer":{"@type":"Answer","text":"У каждого суда свой сайт, и опрашивать их все на каждый запрос долго. К тому же это создало бы ненужную нагрузку на сайты судов. Выберите регионы, а если знаете УИД дела, приложение найдёт суд само."}},{"@type":"Question","name":"Это законно?","acceptedAnswer":{"@type":"Answer","text":"Приложение получает только сведения, которые суды обязаны публиковать в открытом доступе (Федеральный закон № 262-ФЗ). Поиск запускает сам пользователь, запросы идут с его компьютера и в обычном темпе. Использовать полученные сведения нужно в рамках закона, в том числе законодательства о персональных данных."}},{"@type":"Question","name":"Почему какой-то источник показывает ошибку?","acceptedAnswer":{"@type":"Answer","text":"Сайты судов иногда недоступны или меняют разметку. Статус и причина ошибки видны в панели источников. Если сайт поменял разметку, приложение сохранит снимок страницы — его можно отправить разработчику, и разбор поправят в следующем обновлении."}},{"@type":"Question","name":"Что даёт Pro и как его получить?","acceptedAnswer":{"@type":"Answer","text":"Pro добавляет экспорт в Excel и PDF, сохранённые поиски и их сравнение, мониторинг своих дел с уведомлениями, пакетную проверку списка ИНН и ФИО, досье контрагента в PDF, заметки и метки к делам, перенос данных между компьютером и телефоном. Для организаций — общий список дел команды и приоритетная поддержка. Ключ вводится в приложении (кнопка «Pro») и проверяется без интернета, на вашем устройстве. Продажа ключей скоро откроется."}},{"@type":"Question","name":"Почему «Досье»? Раньше приложение называлось иначе","acceptedAnswer":{"@type":"Answer","text":"До октября 2026 года приложение называлось «Судебный поиск». Теперь оно проверяет не только суды, но и банкротства, долги у приставов, сведения ФНС и госзакупки — поэтому «Досье». Установленные копии обновятся сами, история, «Мои дела» и ключ Pro сохранятся."}},{"@type":"Question","name":"Откуда сведения о банкротствах, долгах и компаниях?","acceptedAnswer":{"@type":"Answer","text":"С официальных сайтов: ФНС (ЕГРЮЛ, ЕГРИП, «Прозрачный бизнес», реестр МСП, бухгалтерская отчётность ГИР БО, реестр дисквалифицированных лиц, сведения об иностранных организациях), Федресурса (ЕФРСБ), ФССП (банк данных исполнительных производств) и ЕИС «Закупки». Приложение показывает их так же, как сами сайты, в момент запроса. ФССП ищет граждан только с датой рождения, поэтому по одному ФИО этот источник пропускается — ищите по ИНН. Сайт ФССП почти всегда просит код с картинки и ограничивает частоту запросов."}},{"@type":"Question","name":"Как работает «Дела команды»?","acceptedAnswer":{"@type":"Answer","text":"Для лицензии «для организаций»: сотрудники выбирают общую папку (сетевой диск, Яндекс.Диск, Dropbox), и каждый видит «Мои дела» коллег с заметками. Сервер не нужен — данные остаются в вашей папке."}},{"@type":"Question","name":"Как обновляется приложение?","acceptedAnswer":{"@type":"Answer","text":"Приложение само проверяет, вышла ли новая версия, скачивает её в фоне и предлагает перезапуститься. Версия для Linux в формате .deb обновляется вручную."}},{"@type":"Question","name":"Есть ли версия для macOS?","acceptedAnswer":{"@type":"Answer","text":"Готовится. Сейчас доступны версии для Windows, Linux и Android. Версия для macOS появится, когда пройдёт обязательную проверку Apple: без неё система не даст спокойно установить приложение."}},{"@type":"Question","name":"Как установить на Android и что работает на телефоне?","acceptedAnswer":{"@type":"Answer","text":"Скачайте файл APK на телефон и откройте его. Android попросит разрешить установку из этого источника (браузера или «Файлов») — разрешите и нажмите «Установить». Приложение не из Google Play, поэтому система может предупредить о неизвестном разработчике. На телефоне ищутся суды общей юрисдикции (ГАС «Правосудие»), Верховный и Конституционный суды, реестр адвокатов, Мосгорсуд, КАД и реестры (ФНС, Федресурс, ФССП, ЕИС) — сайты, которым нужен браузер, открываются внутри приложения. Участки мировых судей, экспорт в Excel и PDF — в версии для компьютера."}}]}</script>
   <style>
     :root {
-      --navy: #13294b;
-      --navy-2: #0f2140;
+      --navy: #0b2530;
+      --navy-2: #081c25;
       --ink: #0f172a;
       --muted: #5b6475;
       --line: #e3e7ee;
       --bg: #f4f6f9;
-      --gold: #e3b65b;
-      --gold-2: #ecc77a;
+      --gold: #f5b93a;
+      --gold-2: #f8c95f;
       --card: #ffffff;
+      --teal: #0f6b73;
+      --teal-2: #0c5960;
+      --mint: #5fd3c8;
       --radius: 14px;
     }
     * { box-sizing: border-box; }
@@ -90,13 +110,13 @@
     .t-k { background: #fef3c7; color: #92400e; }
     .t-m { background: #ffe4e6; color: #9f1239; }
     .t-v { background: #ede9fe; color: #5b21b6; }
-    .num { color: #1d3a6e; font-weight: 600; }
+    .num { color: #0f6b73; font-weight: 600; }
 
     /* Секции */
     section.block { padding: 80px 0; }
-    .announce { background: #e3b65b; color: #13294b; text-align: center; padding: 10px 16px; font-size: 14px; font-weight: 600; }
-    .announce a { color: #13294b; }
-    .kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; color: #b0852f; margin: 0 0 10px; }
+    .announce { background: #f5b93a; color: #0b2530; text-align: center; padding: 10px 16px; font-size: 14px; font-weight: 600; }
+    .announce a { color: #0b2530; }
+    .kicker { text-transform: uppercase; letter-spacing: .12em; font-size: 12px; font-weight: 700; color: #9a6a12; margin: 0 0 10px; }
     h2 { font-size: clamp(26px, 3.4vw, 36px); line-height: 1.15; margin: 0 0 14px; letter-spacing: -0.01em; }
     .sub { color: var(--muted); font-size: 17px; max-width: 720px; margin: 0 0 40px; }
     .grid { display: grid; gap: 18px; }
@@ -123,9 +143,11 @@
     .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 22px; }
     .card h3 { margin: 0 0 8px; font-size: 17px; }
     .card p { margin: 0; color: var(--muted); font-size: 15px; }
-    .icon { width: 40px; height: 40px; border-radius: 10px; background: #eef2f8; color: var(--navy); display: grid; place-items: center; margin-bottom: 14px; }
+    .icon { width: 40px; height: 40px; border-radius: 10px; background: #e6f3f2; color: var(--teal); display: grid; place-items: center; margin-bottom: 14px; }
     .source { text-align: left; }
     .source .badge { display: inline-block; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 99px; margin-bottom: 12px; }
+    .group-title { grid-column: 1 / -1; margin: 18px 0 0; font-size: 13px; letter-spacing: .1em; text-transform: uppercase; color: var(--teal); }
+    .group-title:first-child { margin-top: 0; }
     .white { background: #fff; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
 
     .steps { counter-reset: step; }
@@ -197,8 +219,8 @@
       -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 20%, #000 30%, transparent 75%);
     }
     .glow { position: absolute; z-index: -1; border-radius: 50%; filter: blur(70px); opacity: .55; pointer-events: none; }
-    .glow.g1 { width: 420px; height: 420px; background: #2a78d6; top: -140px; right: -80px; animation: drift 18s ease-in-out infinite alternate; }
-    .glow.g2 { width: 320px; height: 320px; background: #b0852f; top: 160px; left: -140px; opacity: .35; animation: drift 22s ease-in-out infinite alternate-reverse; }
+    .glow.g1 { width: 420px; height: 420px; background: var(--teal); top: -140px; right: -80px; animation: drift 18s ease-in-out infinite alternate; }
+    .glow.g2 { width: 320px; height: 320px; background: #9a6a12; top: 160px; left: -140px; opacity: .35; animation: drift 22s ease-in-out infinite alternate-reverse; }
     @keyframes drift { from { transform: translate(0, 0) scale(1); } to { transform: translate(-60px, 40px) scale(1.12); } }
     .hero h1 em { background: linear-gradient(90deg, var(--gold), #f6dba0, var(--gold)); background-size: 200% auto; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shine 6s linear infinite; }
     @keyframes shine { to { background-position: 200% center; } }
@@ -244,8 +266,8 @@
   <div class="top">
     <div class="wrap nav">
       <a class="brand" href="#">
-        <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 3v18M5 7h14M7 7l-3 7a3 3 0 0 0 6 0L7 7Zm10 0-3 7a3 3 0 0 0 6 0l-3-7ZM8 21h8" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        Судебный поиск
+        <svg viewBox="240 150 650 740" width="26" height="30" fill="none" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M290 200H560L690 330V820H290Z" stroke="#f5b93a" stroke-width="56"/><path d="M560 200V330H690" stroke="#f5b93a" stroke-width="56"/><path d="M370 430H560M370 520H600M370 610H470" stroke="#f5b93a" stroke-width="44" opacity=".7"/><circle cx="660" cy="660" r="118" fill="#0b2530" stroke="#5fd3c8" stroke-width="56"/><path d="M745 745L842 842" stroke="#5fd3c8" stroke-width="66"/></svg>
+        Досье
       </a>
       <nav class="nav-links">
         <a href="#sources">Источники</a>
@@ -261,12 +283,12 @@
   <header class="hero">
     <span class="glow g1" aria-hidden="true"></span><span class="glow g2" aria-hidden="true"></span>
     <div class="wrap">
-      <h1 data-cms="hero.title">Все суды России — <em>в одной строке поиска</em></h1>
-      <p data-cms="hero.lead" class="lead">Введите ФИО, название компании, ИНН, номер дела или УИД. Приложение само опросит сайты судов, ФНС, Федресурса, ФССП и госзакупок и соберёт дела, банкротства, долги и сведения о компании на одном экране.</p>
+      <h1 data-cms="hero.title">Проверка людей и компаний&nbsp;— <em>в одной строке поиска</em></h1>
+      <p data-cms="hero.lead" class="lead">Суды, банкротства, долги у приставов, ФНС и госзакупки. Введите ФИО, название, ИНН или номер дела — «Досье» само опросит официальные сайты и соберёт ответы на одном экране. Бесплатно, без регистрации и без серверов.</p>
       <div class="cta">
-        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
+        <span class="js-primary"><a class="btn btn-gold" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-setup-0.1.18.exe" download data-os="windows"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 3v12m0 0-5-5m5 5 5-5M4 21h16" stroke-linecap="round" stroke-linejoin="round"/></svg> Скачать для Windows</a></span>
         <a class="btn btn-ghost" href="#download">Другие системы</a>
-        <span class="dl-meta">Версия 0.1.17 · Windows, Android</span>
+        <span class="dl-meta">Версия 0.1.18 · Windows, Android</span>
       </div>
 
       <div class="mock" aria-label="Пример интерфейса (данные вымышлены)">
@@ -306,7 +328,7 @@
   <div class="stats" aria-label="Коротко в цифрах">
     <div class="wrap">
       <div class="stat"><b data-count="2300" data-suffix="+">2 300+</b><span>сайтов судов</span></div>
-      <div class="stat"><b data-count="11">11</b><span>источников: суды и реестры</span></div>
+      <div class="stat"><b data-count="16">16</b><span>источников: суды и реестры</span></div>
       <div class="stat"><b data-count="1">1</b><span>строка поиска на всё</span></div>
       <div class="stat"><b data-count="0">0</b><span>серверов между вами и сайтами</span></div>
     </div>
@@ -315,17 +337,23 @@
   <section class="block" id="sources">
     <div class="wrap">
       <p class="kicker">Источники</p>
-      <h2 data-cms="sources.title">Одиннадцать источников вместо десятков вкладок</h2>
+      <h2 data-cms="sources.title">Шестнадцать источников вместо десятков вкладок</h2>
       <p data-cms="sources.sub" class="sub">Поиск идёт по официальным сайтам и только по общедоступным сведениям: суды публикуют их по закону об открытости правосудия (262-ФЗ), ФНС, Федресурс, ФССП и ЕИС — по своим законам.</p>
       <div class="grid g3">
+        <p class="group-title">Суды</p>
         <div class="card source"><span class="badge t-s">ГАС «Правосудие»</span><h3>Суды общей юрисдикции</h3><p>Районные, областные, апелляционные, кассационные и военные суды — более 2 300 сайтов. Мировые судьи: выбранные вами участки (до трёх за поиск, на входе каждого — код с картинки).</p></div>
         <div class="card source"><span class="badge t-m">Мосгорсуд</span><h3>Суды Москвы</h3><p>Московский городской суд и районные суды Москвы.</p></div>
         <div class="card source"><span class="badge t-k">КАД</span><h3>Арбитражные суды</h3><p>Все арбитражные суды: участники, судьи, документы. На Windows поиск идёт во встроенном в систему Edge, на других системах — в вашем установленном браузере.</p></div>
         <div class="card source"><span class="badge t-v">ВС РФ</span><h3>Верховный суд</h3><p>Дела и жалобы во всех инстанциях, движение дела и итоговые акты.</p></div>
         <div class="card source"><span class="badge t-ks">КС РФ</span><h3>Конституционный суд</h3><p>Решения Конституционного суда Российской Федерации.</p></div>
+        <p class="group-title">Реестры и ведомства</p>
         <div class="card source"><span class="badge" style="background:#d1fae5;color:#065f46">Минюст</span><h3>Реестр адвокатов</h3><p>Статус, регистрационный номер, адвокатская палата, прежние ФИО.</p></div>
         <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>ЕГРЮЛ и ЕГРИП</h3><p>Реквизиты, руководитель, даты регистрации и прекращения организаций и ИП.</p></div>
-        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>«Прозрачный бизнес»</h3><p>Статус, вид деятельности, МСП и признаки риска: недостоверные сведения, «массовый» адрес и руководитель, дисквалифицированные лица.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>«Прозрачный бизнес»</h3><p>Статус, вид деятельности и признаки риска: недостоверные сведения, «массовый» адрес и руководитель.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>Бухгалтерская отчётность</h3><p>ГИР БО: последний отчётный год, выручка и ссылка на балансы и отчёты о финансовых результатах.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>Реестр МСП</h3><p>Микро, малое или среднее предприятие, вид деятельности и с какой даты компания или ИП в реестре.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>Дисквалифицированные лица</h3><p>Поиск по ФИО: организация, должность, статья КоАП и срок дисквалификации.</p></div>
+        <div class="card source"><span class="badge" style="background:#ccfbf1;color:#115e59">ФНС</span><h3>Иностранные компании</h3><p>Филиалы и представительства (РАФП) и иностранные организации на учёте в налоговых органах.</p></div>
         <div class="card source"><span class="badge" style="background:#ffedd5;color:#9a3412">Федресурс</span><h3>Банкротства</h3><p>Сведения о банкротстве организаций, граждан и ИП из ЕФРСБ: номер дела и его состояние.</p></div>
         <div class="card source"><span class="badge" style="background:#fee2e2;color:#991b1b">ФССП</span><h3>Исполнительные производства</h3><p>Долги по исполнительным документам: по ИНН, названию организации или номеру производства. Код с картинки вводите вы.</p></div>
         <div class="card source"><span class="badge" style="background:#e0e7ff;color:#3730a3">ЕИС</span><h3>Недобросовестные поставщики</h3><p>Реестр недобросовестных поставщиков госзакупок по 44-ФЗ, 223-ФЗ и ПП РФ № 615.</p></div>
@@ -342,7 +370,7 @@
         <div class="card"><div class="icon">⌕</div><h3>Одна строка — любой запрос</h3><p>Само определяет, что вы ввели: ФИО или наименование, ИНН, номер дела или УИД. По УИД сразу находит нужный суд.</p></div>
         <div class="card"><div class="icon">⇄</div><h3>Результаты по мере поступления</h3><p>Ответы появляются, как только их отдаёт сайт. Медленные суды не задерживают остальные, у каждого источника виден свой статус.</p></div>
         <div class="card"><div class="icon">§</div><h3>Карточка и полный текст</h3><p>Движение дела, стороны, обжалование и исполнительные листы. Полный текст судебного акта открывается по кнопке.</p></div>
-        <div class="card"><div class="icon">▤</div><h3>Сводка по контрагенту</h3><p>Сколько дел и в каких судах, по годам, в какой роли участвует лицо, категории и результаты — графиками, сразу после поиска.</p></div>
+        <div class="card"><div class="icon">▤</div><h3>Сводка по контрагенту</h3><p>Сколько дел и в каких судах, по годам, в какой роли участвует лицо, категории и результаты. Графики настраиваются, щелчок по столбцу фильтрует всё — бесплатно.</p></div>
         <div class="card"><div class="icon">★</div><h3>Мои дела</h3><p>Отмечайте важные дела и проверяйте по ним обновления. В Pro приложение проверяет их само и присылает уведомление о новых событиях; к делам — заметки, метки и клиенты.</p></div>
         <div class="card"><div class="icon">✓</div><h3>Проверка контрагента целиком</h3><p>Суды, банкротства, долги у приставов, сведения ФНС и госзакупки по одному ИНН. Сведения из реестров — на отдельной вкладке.</p></div>
         <div class="card"><div class="icon">▣</div><h3>Досье в PDF <span class="pro-tag">Pro</span></h3><p>Готовый отчёт по контрагенту: где искали, сводка, дела со ссылками, банкротства, ФССП и ФНС — для клиента или руководителя.</p></div>
@@ -368,6 +396,7 @@
             <li>Карточки дел и полные тексты актов</li>
             <li>Сводка по контрагенту с графиками</li>
             <li>Избранное и история запросов</li>
+            <li>Сортировка и фильтры по столбцам, настраиваемые графики</li>
             <li>Выгрузка в CSV</li>
           </ul>
         </div>
@@ -388,7 +417,6 @@
             <li>Досье контрагента в PDF: суды, банкротства, ФССП, ФНС</li>
             <li>Заметки, метки и клиенты у дел, список дел клиента в Excel</li>
             <li>Перенос «Моих дел» между компьютером и телефоном файлом</li>
-            <li>Сортировка и фильтры по столбцам, настраиваемые графики сводки</li>
           </ul>
           <p class="note" data-price="note" hidden></p>
           <p class="note">Продажа ключей скоро откроется.</p>
@@ -459,11 +487,16 @@
       <details><summary>Это законно?</summary><p>Приложение получает только сведения, которые суды обязаны публиковать в открытом доступе (Федеральный закон № 262-ФЗ). Поиск запускает сам пользователь, запросы идут с его компьютера и в обычном темпе. Использовать полученные сведения нужно в рамках закона, в том числе законодательства о персональных данных.</p></details>
       <details><summary>Почему какой-то источник показывает ошибку?</summary><p>Сайты судов иногда недоступны или меняют разметку. Статус и причина ошибки видны в панели источников. Если сайт поменял разметку, приложение сохранит снимок страницы — его можно отправить разработчику, и разбор поправят в следующем обновлении.</p></details>
       <details><summary>Что даёт Pro и как его получить?</summary><p>Pro добавляет экспорт в Excel и PDF, сохранённые поиски и их сравнение, мониторинг своих дел с уведомлениями, пакетную проверку списка ИНН и ФИО, досье контрагента в PDF, заметки и метки к делам, перенос данных между компьютером и телефоном. Для организаций — общий список дел команды и приоритетная поддержка. Ключ вводится в приложении (кнопка «Pro») и проверяется без интернета, на вашем устройстве. Продажа ключей скоро откроется.</p></details>
-      <details><summary>Откуда сведения о банкротствах, долгах и компаниях?</summary><p>С официальных сайтов: ФНС (ЕГРЮЛ, ЕГРИП, «Прозрачный бизнес»), Федресурса (ЕФРСБ), ФССП (банк данных исполнительных производств) и ЕИС «Закупки». Приложение показывает их так же, как сами сайты, в момент запроса. ФССП ищет граждан только с датой рождения, поэтому по одному ФИО этот источник пропускается — ищите по ИНН. Сайт ФССП почти всегда просит код с картинки и ограничивает частоту запросов.</p></details>
+      <details><summary>Почему «Досье»? Раньше приложение называлось иначе</summary><p>До октября 2026 года приложение называлось «Судебный поиск». Теперь оно проверяет не только суды, но и банкротства, долги у приставов, сведения ФНС и госзакупки — поэтому «Досье». Установленные копии обновятся сами, история, «Мои дела» и ключ Pro сохранятся.</p></details>
+      <details><summary>Откуда сведения о банкротствах, долгах и компаниях?</summary><p>С официальных сайтов: ФНС (ЕГРЮЛ, ЕГРИП, «Прозрачный бизнес», реестр МСП, бухгалтерская отчётность ГИР БО, реестр дисквалифицированных лиц, сведения об иностранных организациях), Федресурса (ЕФРСБ), ФССП (банк данных исполнительных производств) и ЕИС «Закупки». Приложение показывает их так же, как сами сайты, в момент запроса. ФССП ищет граждан только с датой рождения, поэтому по одному ФИО этот источник пропускается — ищите по ИНН. Сайт ФССП почти всегда просит код с картинки и ограничивает частоту запросов.</p></details>
       <details><summary>Как работает «Дела команды»?</summary><p>Для лицензии «для организаций»: сотрудники выбирают общую папку (сетевой диск, Яндекс.Диск, Dropbox), и каждый видит «Мои дела» коллег с заметками. Сервер не нужен — данные остаются в вашей папке.</p></details>
       <details><summary>Как обновляется приложение?</summary><p>Приложение само проверяет, вышла ли новая версия, скачивает её в фоне и предлагает перезапуститься. Версия для Linux в формате .deb обновляется вручную.</p></details>
+
       <details><summary>Есть ли версия для macOS?</summary><p>Готовится. Сейчас доступны версии для Windows, Linux и Android. Версия для macOS появится, когда пройдёт обязательную проверку Apple: без неё система не даст спокойно установить приложение.</p></details>
+
+
       <details><summary>Как установить на Android и что работает на телефоне?</summary><p>Скачайте файл APK на телефон и откройте его. Android попросит разрешить установку из этого источника (браузера или «Файлов») — разрешите и нажмите «Установить». Приложение не из Google Play, поэтому система может предупредить о неизвестном разработчике. На телефоне ищутся суды общей юрисдикции (ГАС «Правосудие»), Верховный и Конституционный суды, реестр адвокатов, Мосгорсуд, КАД и реестры (ФНС, Федресурс, ФССП, ЕИС) — сайты, которым нужен браузер, открываются внутри приложения. Участки мировых судей, экспорт в Excel и PDF — в версии для компьютера.</p></details>
+
       <div data-cms-faq></div>
     </div>
   </section>
@@ -473,25 +506,27 @@
       <h2 data-cms="download.title">Скачайте и начните искать</h2>
       <p data-cms="download.sub" class="sub" style="margin-left:auto;margin-right:auto">Установка занимает минуту. Регистрация не нужна.</p>
       <div class="dl-options">
-        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 117 МБ</span></a>
-<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-0.1.17.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
+        <a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-setup-0.1.18.exe" download data-os="windows"><b>Windows</b><span>Windows 10 и 11, 64-бит · 117 МБ</span></a>
+<a class="dl-option" href="https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-0.1.18.apk" download data-os="android"><b>Android</b><span>Android 7+, файл APK · 4 МБ</span></a>
       </div>
-      <p class="req">Версия 0.1.17 · нужно подключение к интернету</p>
+      <p class="req">Версия 0.1.18 · нужно подключение к интернету</p>
     </div>
   </section>
 
   <footer>
     <div class="wrap">
-      <p><b>Судебный поиск</b> — независимое приложение. Оно не связано с Судебным департаментом при Верховном суде РФ, ГАС «Правосудие», картотекой арбитражных дел, Московским городским судом, Верховным и Конституционным судами РФ, Министерством юстиции РФ, ФНС России, Федресурсом, ФССП России и ЕИС в сфере закупок и не является официальным источником сведений.</p>
+      <p><b>Досье</b> — независимое приложение. Оно не связано с Судебным департаментом при Верховном суде РФ, ГАС «Правосудие», картотекой арбитражных дел, Московским городским судом, Верховным и Конституционным судами РФ, Министерством юстиции РФ, ФНС России, Федресурсом, ФССП России и ЕИС в сфере закупок и не является официальным источником сведений.</p>
       <p>Достоверные сведения о деле — на официальном сайте соответствующего суда. Пример интерфейса на этой странице содержит вымышленные данные.</p>
+
       <p class="legal-links"><a href="legal/eula.html">Лицензионное соглашение</a><a href="legal/privacy.html">Политика конфиденциальности</a></p>
-      <p>© 2026 Судебный поиск</p>
+
+      <p>© 2026 Досье</p>
     </div>
   </footer>
   <script>
     // Основная кнопка — под систему посетителя, если для неё есть сборка.
     (function () {
-      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-setup-0.1.17.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.17/judge-search-0.1.17.apk"}];
+      var downloads = [{"os":"windows","label":"Windows","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-setup-0.1.18.exe"},{"os":"android","label":"Android","url":"https://github.com/TitarenkoBA/judge/releases/download/v0.1.18/judge-search-0.1.18.apk"}];
       var ua = navigator.userAgent;
       var os = /Android/i.test(ua) ? 'android' : /Windows/i.test(ua) ? 'windows' : /iPhone|iPad/i.test(ua) ? null : /Mac OS X|Macintosh/i.test(ua) ? 'mac' : /Linux|X11/i.test(ua) ? 'linux' : null;
       var mine = downloads.filter(function (d) { return d.os === os; })[0];

@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /downloads/
+
+Sitemap: https://TitarenkoBA.github.io/judge/sitemap.xml
